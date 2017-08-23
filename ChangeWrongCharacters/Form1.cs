@@ -21,6 +21,7 @@ namespace ChangeWrongCharacters
 		private void btnFileLocation_Click(object sender, EventArgs e)
 		{
 			ofdPath.Filter = "Text files (*.txt)|*.txt|Srt files (*.srt)|*.srt";
+			ofdPath.FileName = "";
 			DialogResult result = ofdPath.ShowDialog();
 			if (result == DialogResult.OK)
 			{
@@ -36,6 +37,7 @@ namespace ChangeWrongCharacters
 				this.rtbResult.Clear();
 
 				string fileContent = "";
+				fileContent = File.ReadAllText(this.textBox1.Text);
 				if (!string.IsNullOrEmpty(this.textBox1.Text))
 				{
 					List<char> forbiddenChars = new List<char>() { 'ê', '³', '¿', 'Ÿ', 'æ', '¹', 'œ', 'Ñ', '£', '¯', 'ñ', 'Œ' };
@@ -58,8 +60,6 @@ namespace ChangeWrongCharacters
 					File.WriteAllText(this.textBox1.Text, fileContent);
 
 					MessageBox.Show("Operation completed successfully");
-
-					fileContent = File.ReadAllText(this.textBox1.Text);
 				}
 				else
 					MessageBox.Show("Select your file first!");
